@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selvakumar KS — Mechanical Design &amp; Product Lifecycle Engineer</title>
+<meta name="description" content="Portfolio of Selvakumar KS — Mechanical Design & Product Lifecycle Engineer. Tolerance stack-up, DFMA, Creo automation, Windchill PLM, engineering analytics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+/* ============ TOKENS ============ */
+:root{
+  --bg:#081D2C;          /* page background — deep blueprint navy */
+  --bg-card:#0D2B3F;      /* panel / card background */
+  --bg-card-2:#102F45;    /* hover / alt panel */
+  --ink:#EDF3F6;          /* primary text on dark */
+  --ink-dim:#C3D2DB;      /* secondary text on dark */
+  --muted:#7F97A5;        /* tertiary / captions */
+  --cyan:#2BB2E0;         /* primary accent */
+  --amber:#E0954A;        /* secondary accent — critical callouts */
+  --line:rgba(255,255,255,0.14);
+  --line-soft:rgba(255,255,255,0.08);
+  --white:#0D2B3F;        /* "card" surface, renamed but kept for compatibility */
+  --radius:2px;
+  --sheet-max:1180px;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink-dim);
+  font-family:"IBM Plex Sans",system-ui,sans-serif;
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+}
+h1,h2,h3,h4{
+  font-family:"IBM Plex Sans",sans-serif;
+  font-weight:600;
+  margin:0;
+  color:var(--ink);
+  letter-spacing:-0.01em;
+}
+p{margin:0;}
+a{color:var(--cyan);}
+img{max-width:100%;display:block;}
+.mono{font-family:"IBM Plex Mono",monospace;}
+
+/* ============ SHEET FRAME ============ */
+.sheet-border{
+  position:fixed;
+  inset:10px;
+  border:1px solid var(--line);
+  pointer-events:none;
+  z-index:5;
+}
+.reg-mark{position:absolute;width:16px;height:16px;}
+.reg-mark::before,.reg-mark::after{content:"";position:absolute;background:var(--muted);}
+.reg-mark::before{left:50%;top:0;width:1px;height:100%;transform:translateX(-50%);}
+.reg-mark::after{top:50%;left:0;height:1px;width:100%;transform:translateY(-50%);}
+.reg-mark.tl{top:-8px;left:-8px;}
+.reg-mark.tr{top:-8px;right:-8px;}
+.reg-mark.bl{bottom:-8px;left:-8px;}
+.reg-mark.br{bottom:-8px;right:-8px;}
+@media (max-width:720px){ .sheet-border{display:none;} }
+
+.wrap{
+  max-width:var(--sheet-max);
+  margin:0 auto;
+  padding:0 48px;
+}
+@media (max-width:720px){ .wrap{padding:0 22px;} }
+
+/* ============ DIMENSION-LINE DIVIDER ============ */
+.dim-rule{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  color:var(--muted);
+  margin:0 0 40px 0;
+}
+.dim-rule .tick{width:1px;height:10px;background:var(--line);}
+.dim-rule .track{flex:1;height:1px;background:var(--line);position:relative;}
+.dim-rule .label{
+  font-size:12.5px;
+  letter-spacing:0.06em;
+  white-space:nowrap;
+  color:var(--muted);
+}
+
+/* ============ NAV ============ */
+header.top{
+  position:sticky;top:0;z-index:20;
+  background:rgba(8,29,44,0.88);
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--line);
+}
+.topnav{
+  max-width:var(--sheet-max);
+  margin:0 auto;
+  padding:16px 48px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+@media (max-width:720px){ .topnav{padding:14px 22px;} }
+.brandmark{
+  display:flex;align-items:center;gap:10px;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:13.5px;
+  color:var(--ink);
+  text-decoration:none;
+}
+.brandmark .dot{width:9px;height:9px;border:1.5px solid var(--cyan);border-radius:50%;position:relative;flex:none;}
+.brandmark .dot::after{content:"";position:absolute;inset:2px;background:var(--amber);border-radius:50%;}
+.navlinks{display:flex;gap:26px;list-style:none;margin:0;padding:0;}
+.navlinks a{
+  color:var(--ink-dim);
+  text-decoration:none;
+  font-size:14px;
+  font-family:"IBM Plex Mono",monospace;
+  border-bottom:1px solid transparent;
+  padding-bottom:2px;
+  transition:border-color .15s,color .15s;
+}
+.navlinks a:hover{border-color:var(--cyan);color:var(--ink);}
+@media (max-width:800px){ .navlinks{display:none;} }
+
+/* ============ HERO ============ */
+.hero{
+  padding:88px 0 70px 0;
+  border-bottom:1px solid var(--line);
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.15fr 0.85fr;
+  gap:56px;
+  align-items:center;
+}
+@media (max-width:900px){ .hero-grid{grid-template-columns:1fr;gap:44px;} }
+
+.hero-eyebrow{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:13px;
+  color:var(--cyan);
+  letter-spacing:0.08em;
+  margin-bottom:18px;
+}
+.hero h1{
+  font-size:clamp(2.5rem,5.6vw,4rem);
+  line-height:1.04;
+  margin-bottom:20px;
+}
+.hero h1 span{display:block;font-size:0.4em;font-weight:500;color:var(--ink-dim);margin-top:14px;letter-spacing:0;}
+.hero-tagline{
+  font-style:italic;
+  font-size:1rem;
+  color:var(--cyan);
+  font-weight:500;
+  margin-bottom:16px;
+  letter-spacing:0.01em;
+}
+.hero-desc{
+  max-width:56ch;
+  color:var(--ink-dim);
+  font-size:1.06rem;
+  margin-bottom:30px;
+}
+.tagchips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:34px;}
+.tagchip{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:12.5px;
+  color:var(--ink);
+  border:1px solid var(--line);
+  padding:6px 11px;
+  border-radius:var(--radius);
+  background:var(--bg-card);
+}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 20px;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:13.5px;
+  text-decoration:none;
+  border-radius:var(--radius);
+  border:1px solid var(--cyan);
+  transition:background .15s,color .15s;
+}
+.btn.primary{background:var(--cyan);color:#062434;font-weight:600;}
+.btn.primary:hover{background:#4dc2ea;}
+.btn.ghost{color:var(--ink);border-color:var(--line);}
+.btn.ghost:hover{border-color:var(--cyan);color:var(--cyan);}
+
+/* hero photo */
+.hero-figure{
+  position:relative;
+  max-width:340px;
+  margin:0 auto;
+}
+.photo-frame{
+  position:relative;
+  border:1px solid var(--line);
+  padding:14px;
+  background:var(--bg-card);
+}
+.photo-frame img{
+  width:100%;
+  display:block;
+  filter:saturate(0.96);
+}
+.photo-frame .corner{position:absolute;width:14px;height:14px;}
+.photo-frame .corner::before,.photo-frame .corner::after{content:"";position:absolute;background:var(--cyan);}
+.photo-frame .corner::before{width:100%;height:1.5px;top:0;left:0;}
+.photo-frame .corner::after{height:100%;width:1.5px;top:0;left:0;}
+.photo-frame .corner.tl{top:-1px;left:-1px;}
+.photo-frame .corner.tr{top:-1px;right:-1px;transform:scaleX(-1);}
+.photo-frame .corner.bl{bottom:-1px;left:-1px;transform:scaleY(-1);}
+.photo-frame .corner.br{bottom:-1px;right:-1px;transform:scale(-1,-1);}
+.photo-caption{
+  display:flex;justify-content:space-between;
+  margin-top:10px;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:11px;
+  color:var(--muted);
+  letter-spacing:0.03em;
+}
+
+.stat-strip{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--line);
+  margin-top:56px;
+}
+.stat-strip .stat{
+  padding:20px 18px 0 0;
+  border-left:1px solid var(--line);
+  padding-left:18px;
+}
+.stat-strip .stat:first-child{border-left:none;padding-left:0;}
+.stat .num{font-family:"IBM Plex Mono",monospace;font-size:1.7rem;color:var(--cyan);font-weight:600;}
+.stat .cap{font-size:12.5px;color:var(--muted);margin-top:4px;}
+@media (max-width:720px){
+  .stat-strip{grid-template-columns:repeat(2,1fr);row-gap:22px;}
+  .stat-strip .stat:nth-child(3){border-left:none;padding-left:0;}
+}
+
+/* ============ SECTION SHELL ============ */
+section{padding:76px 0;border-bottom:1px solid var(--line);}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:14px;flex-wrap:wrap;}
+.sec-head h2{font-size:clamp(1.5rem,2.6vw,2rem);}
+.sec-sub{color:var(--muted);max-width:52ch;margin-bottom:36px;font-size:1rem;}
+
+/* ============ PROFILE ============ */
+.profile-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;}
+@media (max-width:880px){ .profile-grid{grid-template-columns:1fr;gap:40px;} }
+.profile-copy p{margin-bottom:16px;color:var(--ink-dim);}
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);}
+.pillar{background:var(--bg-card);padding:20px 20px;}
+.pillar h4{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--amber);margin-bottom:10px;letter-spacing:0.04em;}
+.pillar ul{margin:0;padding-left:0;list-style:none;}
+.pillar li{font-size:14.5px;color:var(--ink-dim);padding:3px 0;position:relative;padding-left:14px;}
+.pillar li::before{content:"–";position:absolute;left:0;color:var(--muted);}
+.leadership{margin-top:26px;}
+.leadership h4{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--muted);margin-bottom:10px;}
+.pill-row{display:flex;flex-wrap:wrap;gap:8px;}
+.pill{font-size:13px;border:1px solid var(--line);padding:6px 12px;border-radius:20px;color:var(--ink);background:var(--bg-card);}
+
+/* ============ COMPETENCIES ============ */
+.comp-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+@media (max-width:1000px){ .comp-grid{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:560px){ .comp-grid{grid-template-columns:1fr;} }
+.comp-col{background:var(--bg-card);padding:22px 20px;}
+.comp-col h4{font-size:14.5px;margin-bottom:14px;color:var(--ink);}
+.comp-col ul{list-style:none;margin:0;padding:0;}
+.comp-col li{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:12.6px;
+  color:var(--muted);
+  padding:5px 0;
+  border-top:1px solid var(--line-soft);
+}
+.comp-col li:first-child{border-top:none;}
+
+/* ============ LIFECYCLE TIMELINE ============ */
+.lifecycle-track{position:relative;padding-top:8px;}
+.lc-line{position:relative;height:1px;background:var(--line);margin:0 0 0 0;}
+.lc-stages{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;}
+@media (max-width:900px){ .lc-stages{grid-template-columns:repeat(3,1fr);} }
+@media (max-width:560px){ .lc-stages{grid-template-columns:1fr 1fr;} }
+.lc-stage{position:relative;padding-top:26px;}
+.lc-stage::before{
+  content:"";
+  position:absolute;top:-1px;left:0;
+  width:9px;height:9px;
+  border-radius:50%;
+  background:var(--bg);
+  border:2px solid var(--cyan);
+  transform:translateY(-50%);
+}
+.lc-num{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--amber);margin-bottom:6px;}
+.lc-stage h4{font-size:14px;margin-bottom:10px;line-height:1.25;}
+.lc-stage ul{list-style:none;margin:0;padding:0;}
+.lc-stage li{font-size:12.6px;color:var(--muted);padding:2px 0;}
+
+/* ============ EXPERIENCE ============ */
+.exp-layout{display:grid;grid-template-columns:1.3fr 1fr;gap:56px;}
+@media (max-width:900px){ .exp-layout{grid-template-columns:1fr;gap:40px;} }
+.timeline{border-left:1px solid var(--line);padding-left:26px;}
+.tl-item{position:relative;padding-bottom:34px;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-item::before{
+  content:"";
+  position:absolute;left:-31px;top:4px;
+  width:9px;height:9px;background:var(--ink-dim);border-radius:50%;
+}
+.tl-item.current::before{background:var(--amber);}
+.tl-year{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);margin-bottom:4px;}
+.tl-role{font-size:1.02rem;font-weight:600;color:var(--ink);}
+.tl-org{color:var(--muted);font-size:14.5px;margin-top:2px;}
+.tl-tag{
+  display:inline-block;margin-top:8px;
+  font-family:"IBM Plex Mono",monospace;font-size:11px;
+  color:var(--amber);border:1px solid var(--amber);
+  padding:2px 8px;border-radius:20px;
+}
+
+.side-panel{border:1px solid var(--line);background:var(--bg-card);}
+.side-panel h4{
+  font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);
+  padding:14px 18px;border-bottom:1px solid var(--line);letter-spacing:0.04em;
+}
+table.spec{width:100%;border-collapse:collapse;}
+table.spec td{
+  padding:10px 18px;font-size:13.6px;border-top:1px solid var(--line-soft);
+}
+table.spec tr:first-child td{border-top:none;}
+table.spec td:first-child{color:var(--ink-dim);}
+table.spec td:last-child{
+  text-align:right;font-family:"IBM Plex Mono",monospace;color:var(--cyan);font-size:12.8px;
+}
+.chiplist{padding:16px 18px 18px;display:flex;flex-wrap:wrap;gap:7px;border-top:1px solid var(--line);}
+.chiplist span{
+  font-size:12px;font-family:"IBM Plex Mono",monospace;color:var(--ink);
+  border:1px solid var(--line);padding:4px 9px;border-radius:2px;
+}
+
+/* ============ CASE STUDIES ============ */
+.cs-list{display:flex;flex-direction:column;gap:2px;}
+.cs-card{
+  background:var(--bg-card);
+  border:1px solid var(--line);
+  padding:34px 34px;
+  display:grid;
+  grid-template-columns:0.85fr 1.4fr;
+  gap:40px;
+  margin-bottom:22px;
+}
+@media (max-width:880px){ .cs-card{grid-template-columns:1fr;gap:26px;padding:26px 22px;} }
+.cs-id{font-family:"IBM Plex Mono",monospace;color:var(--amber);font-size:13px;margin-bottom:8px;}
+.cs-card h3{font-size:1.3rem;margin-bottom:8px;line-height:1.2;}
+.cs-sub{color:var(--muted);font-size:14.5px;margin-bottom:20px;}
+.cs-meta{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13.6px;}
+.cs-meta dt{font-family:"IBM Plex Mono",monospace;color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:0.04em;padding-top:2px;}
+.cs-meta dd{margin:0;color:var(--ink-dim);padding-bottom:10px;}
+.cs-figure{
+  border:1px solid var(--line);
+  background:#ffffff;
+  padding:0;
+  display:block;
+  cursor:zoom-in;
+  position:relative;
+  overflow:hidden;
+}
+.cs-figure img{width:100%;height:auto;display:block;transition:transform .25s;}
+.cs-figure:hover img{transform:scale(1.03);}
+.cs-figure .zoom-hint{
+  position:absolute;right:10px;bottom:10px;
+  background:rgba(8,29,44,0.82);color:var(--ink);
+  font-family:"IBM Plex Mono",monospace;font-size:11px;
+  padding:5px 9px;border-radius:2px;border:1px solid var(--line);
+}
+.cs-tools{margin-top:16px;display:flex;flex-wrap:wrap;gap:7px;}
+.cs-tools span{font-size:11.6px;font-family:"IBM Plex Mono",monospace;color:var(--ink);border:1px solid var(--line);padding:3px 8px;border-radius:2px;background:var(--bg-card-2);}
+
+/* lightbox */
+.lightbox{
+  position:fixed;inset:0;z-index:60;
+  background:rgba(4,14,22,0.92);
+  display:none;
+  align-items:center;justify-content:center;
+  padding:40px;
+}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:100%;max-height:100%;border:1px solid var(--line);background:#fff;}
+.lightbox-close{
+  position:absolute;top:24px;right:32px;
+  color:var(--ink);font-family:"IBM Plex Mono",monospace;font-size:13px;
+  border:1px solid var(--line);padding:8px 14px;border-radius:2px;cursor:pointer;background:transparent;
+}
+
+/* ============ ACHIEVEMENTS ============ */
+.ach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+@media (max-width:880px){ .ach-grid{grid-template-columns:1fr 1fr;} }
+@media (max-width:560px){ .ach-grid{grid-template-columns:1fr;} }
+.ach-card{background:var(--bg-card);padding:24px 22px;display:flex;flex-direction:column;}
+.ach-card h4{font-size:14.5px;margin-bottom:12px;color:var(--ink);}
+.ach-card h4 em{color:var(--amber);font-style:normal;font-family:"IBM Plex Mono",monospace;font-size:12px;display:block;margin-bottom:6px;}
+.ach-card ul{margin:0;padding-left:16px;}
+.ach-card li{font-size:13.4px;color:var(--muted);margin-bottom:6px;line-height:1.45;}
+.ach-proof{
+  order:-1;
+  display:block;
+  margin:0 0 16px 0;
+  border:1px solid var(--line);
+  overflow:hidden;
+  cursor:zoom-in;
+  background:#fff;
+  position:relative;
+}
+.ach-proof img{width:100%;display:block;transition:transform .25s;}
+.ach-proof:hover img{transform:scale(1.04);}
+.ach-proof .zoom-hint{
+  position:absolute;right:8px;bottom:8px;
+  background:rgba(8,29,44,0.82);color:var(--ink);
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+  padding:4px 8px;border-radius:2px;border:1px solid var(--line);
+}
+
+.highlight-strip{
+  margin-top:34px;
+  border:1px solid var(--cyan);
+  background:var(--bg-card-2);
+  color:var(--ink);
+  padding:20px 26px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 28px;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:13px;
+}
+.highlight-strip span{opacity:0.92;}
+.highlight-strip span b{color:var(--amber);font-weight:600;}
+
+/* ============ TAKEAWAYS ============ */
+.take-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;}
+@media (max-width:880px){ .take-grid{grid-template-columns:1fr;gap:34px;} }
+.take-col h4{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--cyan);margin-bottom:14px;letter-spacing:0.04em;}
+.take-col ul{list-style:none;margin:0;padding:0;}
+.take-col li{
+  font-size:14px;padding:8px 0;border-top:1px solid var(--line-soft);color:var(--ink-dim);
+}
+.take-col li:first-child{border-top:none;}
+.closing-line{
+  margin-top:48px;padding-top:32px;border-top:1px solid var(--line);
+  font-size:1.2rem;color:var(--ink);font-weight:500;max-width:60ch;
+}
+.disclaimer{margin-top:16px;font-size:12.5px;color:var(--muted);max-width:60ch;}
+
+/* ============ TITLE BLOCK / CONTACT FOOTER ============ */
+footer{padding:70px 0 60px;}
+.titleblock{
+  border:1px solid var(--line);
+}
+.tb-top{
+  display:grid;grid-template-columns:1.4fr 1fr;
+  border-bottom:1px solid var(--line);
+}
+@media (max-width:720px){ .tb-top{grid-template-columns:1fr;} }
+.tb-name{padding:30px 28px;border-right:1px solid var(--line);background:var(--bg-card);}
+@media (max-width:720px){ .tb-name{border-right:none;border-bottom:1px solid var(--line);} }
+.tb-name .mono{color:var(--muted);font-size:12px;letter-spacing:0.05em;margin-bottom:8px;}
+.tb-name h3{font-size:1.6rem;color:var(--ink);}
+.tb-name p{color:var(--muted);margin-top:6px;}
+.tb-cta{padding:30px 28px;display:flex;flex-direction:column;justify-content:center;gap:12px;background:var(--bg-card);}
+.tb-cells{display:grid;grid-template-columns:repeat(4,1fr);}
+@media (max-width:720px){ .tb-cells{grid-template-columns:1fr 1fr;} }
+.tb-cell{padding:18px 20px;border-right:1px solid var(--line);background:var(--bg-card-2);}
+.tb-cell:last-child{border-right:none;}
+@media (max-width:720px){ .tb-cell:nth-child(2n){border-right:none;} .tb-cell{border-bottom:1px solid var(--line);} }
+.tb-cell .mono{font-size:11px;color:var(--muted);letter-spacing:0.05em;margin-bottom:6px;}
+.tb-cell a, .tb-cell span.val{color:var(--ink);font-size:14.5px;text-decoration:none;font-weight:500;}
+.tb-cell a:hover{color:var(--cyan);}
+.foot-note{margin-top:26px;color:var(--muted);font-size:12.5px;}
+
+.to-top{
+  position:fixed;right:26px;bottom:26px;z-index:20;
+  width:42px;height:42px;border-radius:50%;
+  border:1px solid var(--line);background:var(--bg-card);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  opacity:0;pointer-events:none;transition:opacity .2s;
+}
+.to-top.show{opacity:1;pointer-events:auto;}
+.to-top svg{width:16px;height:16px;}
+
+</style>
+</head>
+<body>
+
+<div class="sheet-border">
+  <span class="reg-mark tl"></span>
+  <span class="reg-mark tr"></span>
+  <span class="reg-mark bl"></span>
+  <span class="reg-mark br"></span>
+</div>
+
+<header class="top">
+  <nav class="topnav">
+    <a class="brandmark" href="#top"><span class="dot"></span>SELVAKUMAR&nbsp;KS</a>
+    <ul class="navlinks">
+      <li><a href="#profile">Profile</a></li>
+      <li><a href="#competencies">Competencies</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#case-studies">Case Studies</a></li>
+      <li><a href="#achievements">Achievements</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" style="border-bottom:1px solid var(--line);padding-top:60px;">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-eyebrow">PRODUCT ENGINEERING PORTFOLIO</div>
+          <h1>Selvakumar KS<span>Mechanical Design &amp; Product Lifecycle Engineer</span></h1>
+          <p class="hero-tagline">Engineering beyond CAD.</p>
+          <p class="hero-desc">10+ years translating customer and product requirements into practical engineering solutions — through CAD, tolerance analysis, DFMA, configuration management and engineering automation.</p>
+          <div class="tagchips">
+            <span class="tagchip">Tolerance Stack-up</span>
+            <span class="tagchip">DFMA</span>
+            <span class="tagchip">Engineering Calculations</span>
+            <span class="tagchip">Windchill PLM</span>
+            <span class="tagchip">Creo Pro/PROGRAM</span>
+            <span class="tagchip">Power BI</span>
+          </div>
+          <div class="hero-cta">
+            <a class="btn primary" href="#case-studies">View case studies</a>
+            <a class="btn ghost" href="#contact">Get in touch</a>
+          </div>
+        </div>
+
+        <div class="hero-figure">
+          <div class="photo-frame">
+            <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+            <img src="assets/headshot.jpg" alt="Portrait of Selvakumar KS">
+          </div>
+          <div class="photo-caption">
+            <span>SELVAKUMAR KS</span>
+            <span>MECH. DESIGN ENGINEER</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-strip">
+        <div class="stat"><div class="num">10+</div><div class="cap">Years experience</div></div>
+        <div class="stat"><div class="num">5+</div><div class="cap">Awards, tech-talks &amp; publications</div></div>
+        <div class="stat"><div class="num">5/5</div><div class="cap">CSAT, five years running</div></div>
+        <div class="stat"><div class="num">6</div><div class="cap">Featured case studies</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROFILE ============ -->
+  <section id="profile">
+    <div class="wrap">
+      <div class="dim-rule"><span class="tick"></span><span class="track"></span><span class="label mono">ENGINEERING PROFILE</span><span class="track"></span><span class="tick"></span></div>
+      <div class="sec-head"><h2>An end-to-end product lifecycle mindset</h2></div>
+
+      <div class="profile-grid">
+        <div class="profile-copy">
+          <p>Mechanical Design &amp; Product Lifecycle Engineer with 10+ years of experience in product design, engineering analysis, engineering change management, product lifecycle support and manufacturing optimization.</p>
+          <p>Experienced in translating customer and product requirements into practical engineering solutions through CAD, tolerance analysis, DFMA, configuration management and engineering automation — carrying a design from concept through end-of-life.</p>
+
+          <div class="leadership">
+            <h4>LEADERSHIP &amp; DEVELOPMENT</h4>
+            <div class="pill-row">
+              <span class="pill">Connected Manager Program</span>
+              <span class="pill">Technical Mentoring</span>
+              <span class="pill">Global Tech-Talk Speaker</span>
+              <span class="pill">Cross-Functional Collaboration</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pillars">
+          <div class="pillar">
+            <h4>DESIGN</h4>
+            <ul><li>CAD Modeling</li><li>Automation</li><li>Configurable Assemblies</li></ul>
+          </div>
+          <div class="pillar">
+            <h4>ANALYZE</h4>
+            <ul><li>GD&amp;T</li><li>Tolerance Stack-up</li><li>Engineering Calculations</li></ul>
+          </div>
+          <div class="pillar">
+            <h4>OPTIMIZE</h4>
+            <ul><li>DFMA</li><li>BOM</li><li>Manufacturing</li></ul>
+          </div>
+          <div class="pillar">
+            <h4>LIFECYCLE</h4>
+            <ul><li>Product Lifecycle</li><li>ECO/ECN Management</li><li>Service Parts &amp; Obsolescence</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMPETENCIES ============ -->
+  <section id="competencies">
+    <div class="wrap">
+      <div class="dim-rule"><span class="tick"></span><span class="track"></span><span class="label mono">PRODUCT ENGINEERING COMPETENCIES</span><span class="track"></span><span class="tick"></span></div>
+      <div class="sec-head"><h2>Core technical competency map</h2></div>
+      <p class="sec-sub">Five working disciplines, spanning the model, the math, and the manufacturing floor.</p>
+
+      <div class="comp-grid">
+        <div class="comp-col">
+          <h4>CAD &amp; Design</h4>
+          <ul>
+            <li>Creo Parametric</li>
+            <li>Part &amp; Assembly Modeling</li>
+            <li>Family Tables</li>
+            <li>Top-down Design</li>
+          </ul>
+        </div>
+        <div class="comp-col">
+          <h4>Engineering Analysis</h4>
+          <ul>
+            <li>GD&amp;T</li>
+            <li>Tolerance Stack-up Analysis</li>
+            <li>Creo Simulate FEA</li>
+            <li>Engineering Calculations</li>
+          </ul>
+        </div>
+        <div class="comp-col">
+          <h4>Product Optimization</h4>
+          <ul>
+            <li>DFMA</li>
+            <li>BOM Optimization</li>
+            <li>Part Consolidation</li>
+            <li>Assembly Simplification</li>
+          </ul>
+        </div>
+        <div class="comp-col">
+          <h4>Product Lifecycle</h4>
+          <ul>
+            <li>Lifecycle Support</li>
+            <li>ECO/ECN Management</li>
+            <li>Service Parts Management</li>
+            <li>Obsolescence Management</li>
+            <li>Configuration Control</li>
+          </ul>
+        </div>
+        <div class="comp-col">
+          <h4>Automation</h4>
+          <ul>
+            <li>Creo Relations &amp; Parameters</li>
+            <li>Pro/PROGRAM Automation</li>
+            <li>Configurable Design</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LIFECYCLE TIMELINE ============ -->
+  <section id="lifecycle">
+    <div class="wrap">
+      <div class="dim-rule"><span class="tick"></span><span class="track"></span><span class="label mono">END-TO-END LIFECYCLE EXPERIENCE</span><span class="track"></span><span class="tick"></span></div>
+      <div class="sec-head"><h2>Engineering contributions across every phase</h2></div>
+      <p class="sec-sub">From first concept sketch to end-of-life support — six stages, each with hands-on ownership.</p>
+
+      <div class="lifecycle-track">
+        <div class="lc-line"></div>
+        <div class="lc-stages">
+          <div class="lc-stage">
+            <div class="lc-num mono">01</div>
+            <h4>Concept</h4>
+            <ul><li>Concept Development</li><li>Engineering Calculations</li></ul>
+          </div>
+          <div class="lc-stage">
+            <div class="lc-num mono">02</div>
+            <h4>Design &amp; Development</h4>
+            <ul><li>Creo CAD Design</li><li>GD&amp;T &amp; Stack-up Analysis</li><li>Design Automation</li></ul>
+          </div>
+          <div class="lc-stage">
+            <div class="lc-num mono">03</div>
+            <h4>Validation / Testing</h4>
+            <ul><li>Structural Validation</li><li>Creo Simulate FEA</li><li>Load &amp; Stability Studies</li></ul>
+          </div>
+          <div class="lc-stage">
+            <div class="lc-num mono">04</div>
+            <h4>Production / Launch</h4>
+            <ul><li>DFMA &amp; BOM Optimization</li><li>Assembly Simplification</li><li>Manufacturing Release</li></ul>
+          </div>
+          <div class="lc-stage">
+            <div class="lc-num mono">05</div>
+            <h4>Post-Launch / Maturity</h4>
+            <ul><li>ECO/ECN Management</li><li>Value Engineering</li><li>Service Parts Support</li></ul>
+          </div>
+          <div class="lc-stage">
+            <div class="lc-num mono">06</div>
+            <h4>End-of-Life</h4>
+            <ul><li>Obsolescence Management</li><li>Alternate Part Qualification</li><li>Product Sustainment</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <section id="experience">
+    <div class="wrap">
+      <div class="dim-rule"><span class="tick"></span><span class="track"></span><span class="label mono">EXPERIENCE AT A GLANCE</span><span class="track"></span><span class="tick"></span></div>
+      <div class="sec-head"><h2>Career progression</h2></div>
+
+      <div class="exp-layout">
+        <div class="timeline">
+          <div class="tl-item current">
+            <div class="tl-year mono">2025 — PRESENT</div>
+            <div class="tl-role">Senior Engineer</div>
+            <div class="tl-org">Capgemini Engineering</div>
+            <span class="tl-tag">Modular Storage · Cabinets &amp; Enclosures · Screen Systems</span>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year mono">2023 — 2025</div>
+            <div class="tl-role">Professional II</div>
+            <div class="tl-org">Capgemini Engineering</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year mono">2021 — 2023</div>
+            <div class="tl-role">Professional I</div>
+            <div class="tl-org">Capgemini Engineering</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year mono">2018 — 2021</div>
+            <div class="tl-role">Junior Engineer</div>
+            <div class="tl-org">Altran Technologies Pvt. Ltd.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year mono">2016 — 2018</div>
+            <div class="tl-role">Graduate Trainee Engineer</div>
+            <div class="tl-org">Pricol Technologies Pvt. Ltd.</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="side-panel" style="margin-bottom:22px;">
+            <h4>YEARS OF DEPTH</h4>
+            <table class="spec">
+              <tr><td>Product Design</td><td>10+ yrs</td></tr>
+              <tr><td>Creo Parametric</td><td>10+ yrs</td></tr>
+              <tr><td>Windchill PLM</td><td>8+ yrs</td></tr>
+              <tr><td>DFMA</td><td>8+ yrs</td></tr>
+              <tr><td>Engineering Changes</td><td>8+ yrs</td></tr>
+              <tr><td>Tolerance Stack-up</td><td>5+ yrs</td></tr>
+              <tr><td>Creo Pro/PROGRAM</td><td>4+ yrs</td></tr>
+              <tr><td>Power BI Analytics</td><td>2+ yrs</td></tr>
+            </table>
+          </div>
+
+          <div class="side-panel">
+            <h4>KEY TOOLS</h4>
+            <div class="chiplist">
+              <span>Creo Parametric</span>
+              <span>Windchill PLM</span>
+              <span>Creo Pro/PROGRAM</span>
+              <span>Power BI</span>
+              <span>Microsoft Excel</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CASE STUDIES ============ -->
+  <section id="case-studies">
+    <div class="wrap">
+      <div class="dim-rule"><span class="tick"></span><span class="track"></span><span class="label mono">CASE STUDIES</span><span class="track"></span><span class="tick"></span></div>
+      <div class="sec-head"><h2>Six problems, worked end to end</h2></div>
+      <p class="sec-sub">Pulled directly from the working portfolio deck. Examples are simplified and/or anonymized to protect proprietary product, customer and company information. Click any figure to enlarge.</p>
+
+      <div class="cs-list">
+
+        <!-- CS 01 -->
+        <article class="cs-card">
+          <div>
+            <div class="cs-id">CS-01</div>
+            <h3>Tolerance Stack-up</h3>
+            <p class="cs-sub">Functional gap validation &amp; optimization.</p>
+            <dl class="cs-meta">
+              <dt>Objective</dt><dd>Validate a critical cabinet gap requirement.</dd>
+              <dt>Method</dt><dd>Tolerance stack-up analysis — worst case &amp; RSS.</dd>
+              <dt>Focus</dt><dd>Functional fit and aesthetic gap control.</dd>
+              <dt>Outcome</dt><dd>Design validated; tolerance strategy defined.</dd>
+            </dl>
+          </div>
+          <a class="cs-figure" href="assets/case-studies/cs01-full.jpg" data-lightbox>
+            <img src="assets/case-studies/cs01-thumb.jpg" alt="Tolerance stack-up analysis — CAD gap view, tolerance chain and calculation table">
+            <span class="zoom-hint">View full case study ⤢</span>
+          </a>
+        </article>
+
+        <!-- CS 02 -->
+        <article class="cs-card">
+          <div>
+            <div class="cs-id">CS-02</div>
+            <h3>Design Automation — Creo Pro/PROGRAM</h3>
+            <p class="cs-sub">Parameter-driven automation for rapid, consistent configuration.</p>
+            <dl class="cs-meta">
+              <dt>Challenge</dt><dd>Multiple cabinet/tower variants; repetitive, error-prone modeling.</dd>
+              <dt>Technique</dt><dd>Creo Relations, Parameters, Family Tables, Pro/PROGRAM.</dd>
+              <dt>Value</dt><dd>Faster configuration, fewer errors, greater design reuse.</dd>
+            </dl>
+          </div>
+          <a class="cs-figure" href="assets/case-studies/cs02-full.jpg" data-lightbox>
+            <img src="assets/case-studies/cs02-thumb.jpg" alt="Creo Pro/PROGRAM automation — model tree, relations and parameters, workflow">
+            <span class="zoom-hint">View full case study ⤢</span>
+          </a>
+        </article>
+
+        <!-- CS 03 -->
+        <article class="cs-card">
+          <div>
+            <div class="cs-id">CS-03</div>
+            <h3>DFMA &amp; BOM Optimization</h3>
+            <p class="cs-sub">Manufacturability and assembly efficiency through simplification.</p>
+            <dl class="cs-meta">
+              <dt>Before</dt><dd>Design-centric BOM, separate assembly planning, limited logistics view.</dd>
+              <dt>After</dt><dd>Manufacturing-centric BOM, optimized hardware grouping, shipment-ready.</dd>
+              <dt>Value</dt><dd>Simpler assembly, easier service, better maintainability.</dd>
+            </dl>
+          </div>
+          <a class="cs-figure" href="assets/case-studies/cs03-full.jpg" data-lightbox>
+            <img src="assets/case-studies/cs03-thumb.jpg" alt="DFMA and BOM optimization — before and after process comparison">
+            <span class="zoom-hint">View full case study ⤢</span>
+          </a>
+        </article>
+
+        <!-- CS 04 -->
+        <article class="cs-card">
+          <div>
+            <div class="cs-id">CS-04</div>
+            <h3>Engineering Calculations &amp; Validation</h3>
+            <p class="cs-sub">Structural analysis, product safety and joint validation.</p>
+            <dl class="cs-meta">
+              <dt>Method</dt><dd>Beam theory, static equilibrium, GD&amp;T, tolerance analysis, Creo Simulate FEA.</dd>
+              <dt>Coverage</dt><dd>Shelf deflection, cabinet top load, tip-over stability, joint strength.</dd>
+              <dt>Outcome</dt><dd>Design limits set; structural integrity verified.</dd>
+            </dl>
+            <div class="cs-tools">
+              <span>Creo Simulate</span><span>GD&amp;T</span><span>RSS Analysis</span>
+            </div>
+          </div>
+          <a class="cs-figure" href="assets/case-studies/cs04-full.jpg" data-lightbox>
+            <img src="assets/case-studies/cs04-thumb.jpg" alt="Engineering calculations and FEA validation — deflection, load and joint results">
+            <span class="zoom-hint">View full case study ⤢</span>
+          </a>
+        </article>
+
+        <!-- CS 05 -->
+        <article class="cs-card">
+          <div>
+            <div class="cs-id">CS-05</div>
+            <h3>Lifecycle &amp; Engineering Change Management</h3>
+            <p class="cs-sub">Controlled engineering changes through the product lifecycle.</p>
+            <dl class="cs-meta">
+              <dt>Workflow</dt><dd>Requirement → ECR → validation → implementation → BOM update → PLM release → service.</dd>
+              <dt>Challenge</dt><dd>Multi-configuration changes, component obsolescence, traceability.</dd>
+              <dt>Value</dt><dd>Better traceability, controlled changes, reduced lifecycle risk.</dd>
+            </dl>
+          </div>
+          <a class="cs-figure" href="assets/case-studies/cs05-full.jpg" data-lightbox>
+            <img src="assets/case-studies/cs05-thumb.jpg" alt="Product lifecycle and engineering change management workflow">
+            <span class="zoom-hint">View full case study ⤢</span>
+          </a>
+        </article>
+
+        <!-- CS 06 -->
+        <article class="cs-card">
+          <div>
+            <div class="cs-id">CS-06</div>
+            <h3>Engineering Analytics — Power BI</h3>
+            <p class="cs-sub">Turning engineering data into actionable project insight.</p>
+            <dl class="cs-meta">
+              <dt>Challenge</dt><dd>Limited workload visibility, manual status reporting.</dd>
+              <dt>Dashboard</dt><dd>Resource utilization, deliverable tracking, weekly metrics.</dd>
+              <dt>Outcome</dt><dd>Real-time visibility into resources, deliverables and performance.</dd>
+            </dl>
+          </div>
+          <a class="cs-figure" href="assets/case-studies/cs06-full.jpg" data-lightbox>
+            <img src="assets/case-studies/cs06-thumb.jpg" alt="Power BI engineering analytics dashboard">
+            <span class="zoom-hint">View full case study ⤢</span>
+          </a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ACHIEVEMENTS ============ -->
+  <section id="achievements">
+    <div class="wrap">
+      <div class="dim-rule"><span class="tick"></span><span class="track"></span><span class="label mono">ACHIEVEMENTS &amp; RECOGNITION</span><span class="track"></span><span class="tick"></span></div>
+      <div class="sec-head"><h2>Technical contribution &amp; thought leadership</h2></div>
+
+      <div class="ach-grid">
+        <div class="ach-card">
+          <h4><em>Automation</em>Configurable design at scale</h4>
+          <ul>
+            <li>Configurable design solutions using Creo Pro/PROGRAM &amp; Relations</li>
+            <li>Automated repetitive engineering tasks</li>
+            <li>Parameter-driven assemblies across product configurations</li>
+          </ul>
+        </div>
+        <div class="ach-card">
+          <a class="ach-proof" href="assets/achievements/tech-talk.jpg" data-lightbox>
+            <img src="assets/achievements/tech-talk.jpg" alt="Tech-Talk session: Evaluation of Dimensional clearance & Functional gaps on Cabinet, presented by Selvakumar KS">
+            <span class="zoom-hint">Enlarge ⤢</span>
+          </a>
+          <h4><em>Knowledge sharing</em>Global Tech-Talk speaker</h4>
+          <ul>
+            <li>Sessions on Tolerance Stack-up Analysis &amp; GD&amp;T</li>
+            <li>Best practices for manufacturability and calculations</li>
+            <li>Structured learning across engineering teams</li>
+          </ul>
+        </div>
+        <div class="ach-card">
+          <h4><em>Digital engineering</em>Power BI analytics</h4>
+          <ul>
+            <li>Dashboards for project tracking &amp; resource utilization</li>
+            <li>Automated reporting and performance visualization</li>
+            <li>Supported management decision-making</li>
+          </ul>
+        </div>
+        <div class="ach-card">
+          <a class="ach-proof" href="assets/achievements/magazine.jpg" data-lightbox>
+            <img src="assets/achievements/magazine.jpg" alt="Published article: Beyond Launch — Sustaining Products Through Service Readiness and Obsolescence Management, by Selvakumar KS">
+            <span class="zoom-hint">Enlarge ⤢</span>
+          </a>
+          <h4><em>Publication</em>Global Engineering Magazine</h4>
+          <ul>
+            <li>Authored a technical article on lifecycle engineering &amp; service readiness</li>
+            <li>Contributed to global knowledge sharing</li>
+            <li>Recognized for technical thought leadership</li>
+          </ul>
+        </div>
+        <div class="ach-card">
+          <h4><em>Client recognition</em>Delivery Value Improvement Award</h4>
+          <ul>
+            <li>DVI Award for outstanding client impact</li>
+            <li>5/5 customer satisfaction — five consecutive years</li>
+            <li>Multiple Team Excellence awards</li>
+          </ul>
+        </div>
+        <div class="ach-card">
+          <a class="ach-proof" href="assets/achievements/connected-manager.jpg" data-lightbox>
+            <img src="assets/achievements/connected-manager.jpg" alt="Connected Manager Certificate awarded to Selvakumar KS by Capgemini University and Harvard Business Publishing">
+            <span class="zoom-hint">Enlarge ⤢</span>
+          </a>
+          <h4><em>Leadership</em>Connected Manager Program</h4>
+          <ul>
+            <li>Certified through Capgemini University with Harvard Business Publishing</li>
+            <li>Strengthened leadership, coaching &amp; cross-functional skills</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="highlight-strip">
+        <span><b>5+</b> Awards</span>
+        <span><b>5 yrs</b> of 5/5 Customer Feedback</span>
+        <span><b>1</b> Global Publication</span>
+        <span>Technical Speaker</span>
+        <span>Connected Manager Program Graduate</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TAKEAWAYS ============ -->
+  <section id="takeaways">
+    <div class="wrap">
+      <div class="dim-rule"><span class="tick"></span><span class="track"></span><span class="label mono">KEY TAKEAWAYS</span><span class="track"></span><span class="tick"></span></div>
+      <div class="sec-head"><h2>Where the work adds up</h2></div>
+
+      <div class="take-grid">
+        <div class="take-col">
+          <h4>PORTFOLIO HIGHLIGHTS</h4>
+          <ul>
+            <li>Tolerance Stack-up Analysis</li>
+            <li>Design Automation using Creo Pro/PROGRAM</li>
+            <li>DFMA &amp; Manufacturing BOM Optimization</li>
+            <li>Engineering Analytics using Power BI</li>
+            <li>Product Lifecycle &amp; Change Management</li>
+          </ul>
+        </div>
+        <div class="take-col">
+          <h4>PROFESSIONAL HIGHLIGHTS</h4>
+          <ul>
+            <li>Product Design &amp; Lifecycle Engineering</li>
+            <li>GD&amp;T &amp; Engineering Calculations</li>
+            <li>Creo Pro/PROGRAM Automation</li>
+            <li>Windchill PLM &amp; Change Management</li>
+            <li>Service Parts &amp; Obsolescence Management</li>
+          </ul>
+        </div>
+        <div class="take-col">
+          <h4>RECOGNITION</h4>
+          <ul>
+            <li>5/5 Customer Feedback — 5 Consecutive Years</li>
+            <li>Delivery Value Improvement Award</li>
+            <li>Global Engineering Magazine Publication</li>
+            <li>Internal Tech-Talk Contributor</li>
+            <li>Multiple Team Excellence Awards</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="closing-line">Delivering engineering solutions through analysis, automation, optimization and lifecycle excellence — engineering beyond CAD.</p>
+      <p class="disclaimer">Portfolio examples are simplified and/or anonymized to protect proprietary product, customer and company information.</p>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT / TITLE BLOCK ============ -->
+  <footer id="contact">
+    <div class="wrap">
+      <div class="dim-rule"><span class="tick"></span><span class="track"></span><span class="label mono">CONTACT</span><span class="track"></span><span class="tick"></span></div>
+
+      <div class="titleblock">
+        <div class="tb-top">
+          <div class="tb-name">
+            <div class="mono">TITLE BLOCK</div>
+            <h3>Selvakumar KS</h3>
+            <p>Mechanical Design &amp; Product Lifecycle Engineer</p>
+          </div>
+          <div class="tb-cta">
+            <a class="btn primary" href="mailto:selva.kssk95@gmail.com" style="align-self:flex-start;">Email Selvakumar</a>
+            <span style="color:var(--muted);font-size:13.5px;">Looking forward to contributing through engineering excellence, innovation and continuous improvement.</span>
+          </div>
+        </div>
+        <div class="tb-cells">
+          <div class="tb-cell">
+            <div class="mono">EMAIL</div>
+            <a href="mailto:selva.kssk95@gmail.com">selva.kssk95@gmail.com</a>
+          </div>
+          <div class="tb-cell">
+            <div class="mono">PHONE</div>
+            <a href="tel:+919047588250">+91 90475 88250</a>
+          </div>
+          <div class="tb-cell">
+            <div class="mono">LINKEDIN</div>
+            <a href="https://www.linkedin.com/in/selvakumar-ks-41a4a4169/" target="_blank" rel="noopener">linkedin.com/in/selvakumar-ks</a>
+          </div>
+          <div class="tb-cell">
+            <div class="mono">LOCATION</div>
+            <span class="val">Chennai, India</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot-note">
+        <span>© <span id="year"></span> Selvakumar KS — Engineering Beyond CAD</span>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<!-- lightbox for case-study images -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">Close ✕</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<button class="to-top" id="toTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#EDF3F6" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  var toTop = document.getElementById('toTop');
+  window.addEventListener('scroll', function(){
+    toTop.classList.toggle('show', window.scrollY > 600);
+  });
+  toTop.addEventListener('click', function(){
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  // lightbox
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  document.querySelectorAll('[data-lightbox]').forEach(function(el){
+    el.addEventListener('click', function(e){
+      e.preventDefault();
+      lightboxImg.src = el.getAttribute('href');
+      lightboxImg.alt = el.querySelector('img').alt;
+      lightbox.classList.add('open');
+    });
+  });
+  function closeLightbox(){ lightbox.classList.remove('open'); lightboxImg.src=''; }
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function(e){ if(e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLightbox(); });
+</script>
+
+</body>
+</html>
