@@ -501,6 +501,15 @@ footer{padding:70px 0 60px;}
 .to-top.show{opacity:1;pointer-events:auto;}
 .to-top svg{width:16px;height:16px;}
 
+/* basic image protection */
+img{
+  -webkit-user-drag:none;
+  user-drag:none;
+  -webkit-touch-callout:none;
+  user-select:none;
+  -webkit-user-select:none;
+}
+
 </style>
 </head>
 <body>
@@ -1111,6 +1120,13 @@ footer{padding:70px 0 60px;}
   document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', function(e){ if(e.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLightbox(); });
+
+  // basic image protection: block right-click-save and drag-out on images
+  document.querySelectorAll('img').forEach(function(img){
+    img.setAttribute('draggable', 'false');
+    img.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+    img.addEventListener('dragstart', function(e){ e.preventDefault(); });
+  });
 </script>
 
 </body>

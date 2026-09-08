@@ -25,9 +25,9 @@ so the folders must be uploaded to GitHub with this structure intact — not fla
 ## Publishing on GitHub Pages — folder-safe method
 
 GitHub's "Choose your files" button only lets you pick individual files, which is why folders
-got flattened last time. To upload real folders, you must **drag the folder icon itself** from
-your computer's file explorer into the browser — do not click into the folder and select files
-from inside it.
+can get flattened if you're not careful. To upload real folders, you must **drag the folder icon
+itself** from your computer's file explorer into the browser — do not click into the folder and
+select files from inside it.
 
 1. On your repo page, click **Add file → Upload files**.
 2. Open the unzipped `portfolio-site` folder in a separate File Explorer / Finder window, arranged
@@ -40,18 +40,33 @@ from inside it.
    inside it.
 5. Wait a few seconds — GitHub will list out every nested file it found before you commit. Scroll
    through and confirm you see all of: `headshot.jpg`, `case-studies/cs01-thumb.jpg` ... `cs06-full.jpg`,
-   `achievements/tech-talk.jpg`, `magazine.jpg`, `connected-manager.jpg` (12 + 3 + 1 = 16 image files
-   total, nested under `assets/`).
+   `achievements/tech-talk.jpg`, `magazine.jpg`, `connected-manager.jpg`.
 6. Scroll down, click **Commit changes**.
 
 If dragging the folder doesn't work in your browser, the reliable fallback is **GitHub Desktop**:
 install it, clone the empty repo to your computer, copy the `portfolio-site` folder's contents
 directly into the cloned folder on disk (via File Explorer, so the nested structure is preserved
-automatically), then use GitHub Desktop to commit and push. No drag-and-drop finickiness that way.
+automatically), then use GitHub Desktop to commit and push.
 
 ## Enable Pages
 
 **Settings → Pages → Build and deployment → Source → Deploy from a branch → main → / (root) → Save.**
-(If you deleted and recreated the repo, this setting resets and needs to be done again.)
 
 Live at: `https://selvakumar-ks.github.io/`
+
+## Image protection
+
+All 6 case-study images (thumb + full) carry:
+- A subtle repeating diagonal watermark with your name
+- A corner credit mark ("© Selvakumar KS • Portfolio")
+- Two known-sensitive items already redacted: a coworker's name + project date in CS-01,
+  and a client name + coworker names across several chart labels and the delivery table in CS-06
+
+The site also disables right-click-save and drag-out on all images (basic deterrent only —
+determined users can still access images via browser dev tools, but this stops casual copying).
+
+## Editing later
+
+Sections are labeled with clear `id`s (`#profile`, `#competencies`, `#experience`,
+`#case-studies`, `#achievements`, `#contact`) — search `index.html` for the heading text to find
+and edit any section. Colors and type live in the `:root` CSS variables near the top of the file.
